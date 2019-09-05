@@ -1,5 +1,5 @@
 # CSCE-Lab-1
-This is the lab in a computer simulation and computing experiment
+This is the lab in a CSCE
 
                           Task
 I. Сonstruct polynomials that will acquire corresponding values 
