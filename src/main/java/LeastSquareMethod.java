@@ -30,34 +30,36 @@ class LeastSquareMethod {
         }
     };
     private final Integer N = 3;
-    List<Double> calculateCoefficients(){
+
+    List<Double> calculateCoefficients() {
         List<List<Double>> arrayA = new ArrayList<>();
-        ArrayList<Double> arrayB = new ArrayList<Double>(Collections.nCopies(N,0.0)){};
-        for(int i = 0; i< N; i++){
+        ArrayList<Double> arrayB = new ArrayList<Double>(Collections.nCopies(N, 0.0)) {
+        };
+        for (int i = 0; i < N; i++) {
             arrayA.add(new ArrayList<>(Collections.nCopies(N, 0.0)));
 
-            for(int j = 0; j < N; j++){
+            for (int j = 0; j < N; j++) {
 
                 double temp = 0;
-                for(int k = 0; k < points.size(); k++){
-                    temp += Math.pow(arrayX.get(k), i+j);
+                for (int k = 0; k < points.size(); k++) {
+                    temp += Math.pow(arrayX.get(k), i + j);
                 }
-                arrayA.get(i).set(j,temp);
+                arrayA.get(i).set(j, temp);
             }
             double y = 0;
-            for(int k = 0; k < points.size(); k++){
-                y += points.get(arrayX.get(k))*Math.pow(arrayX.get(k), i);
+            for (int k = 0; k < points.size(); k++) {
+                y += points.get(arrayX.get(k)) * Math.pow(arrayX.get(k), i);
             }
-            arrayB.set(i,y);
+            arrayB.set(i, y);
         }
-        ArrayList<Double> coef = new ArrayList<>(Collections.nCopies(N,0.0));
+        ArrayList<Double> coef = new ArrayList<>(Collections.nCopies(N, 0.0));
         return SqrtMt.solve(arrayA, arrayB, coef);
     }
-    Double getY(double x, List<Double> coef)
-    {
+
+    Double getY(double x, List<Double> coef) {
         double res = 0;
-        for(int i = 0; i < coef.size(); i++){
-            res += coef.get(i)*Math.pow(x, i);
+        for (int i = 0; i < coef.size(); i++) {
+            res += coef.get(i) * Math.pow(x, i);
         }
         return res;
     }

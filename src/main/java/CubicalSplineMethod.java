@@ -46,12 +46,12 @@ class CubicalSplineMethod {
             bSpline.add(getFunction(arrayX.get(i)));
             bSpline.add(getFunction(arrayX.get(i)));
         }
-        bSpline.add(getFunction(arrayX.get(arrayX.size()-1)));
+        bSpline.add(getFunction(arrayX.get(arrayX.size() - 1)));
         int size = bSpline.size();
         for (int i = 0; i < size; ++i) {
             bSpline.add(0.0);
         }
-        bSpline.forEach(e1->System.out.print(e1+" "));
+        bSpline.forEach(e1 -> System.out.print(e1 + " "));
         List<List<Double>> aSpline = new ArrayList<>();
         for (int i = 0; i < bSpline.size(); ++i) {
             List<Double> tmpList = new ArrayList<>();
@@ -69,9 +69,9 @@ class CubicalSplineMethod {
             first.set(i * 4 + 2, arrayX.get(i));
             first.set(i * 4 + 3, 1.0);
 
-            second.set(i * 4, arrayX.get(i+1) * arrayX.get(i+1) * arrayX.get(i+1));
-            second.set(i * 4 + 1, arrayX.get(i+1) * arrayX.get(i+1));
-            second.set(i * 4 + 2, arrayX.get(i+1));
+            second.set(i * 4, arrayX.get(i + 1) * arrayX.get(i + 1) * arrayX.get(i + 1));
+            second.set(i * 4 + 1, arrayX.get(i + 1) * arrayX.get(i + 1));
+            second.set(i * 4 + 2, arrayX.get(i + 1));
             second.set(i * 4 + 3, 1.0);
         }
 
@@ -112,7 +112,7 @@ class CubicalSplineMethod {
         return SqrtMt.solve(aSpline, bSpline, coef);
     }
 
-    Double getSpline(Double x,List<Double> coef) {
+    Double getSpline(Double x, List<Double> coef) {
         int index = 1;
         for (; index < arrayX.size(); ++index) {
             if (x <= arrayX.get(index)) {

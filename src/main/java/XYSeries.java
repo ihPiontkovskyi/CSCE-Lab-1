@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class SplineXYSeries extends ApplicationFrame {
+class XYSeries extends ApplicationFrame {
 
     private static List<Double> arrayX = new ArrayList<Double>() {
         {
@@ -27,21 +27,33 @@ class SplineXYSeries extends ApplicationFrame {
         }
     };
 
-    SplineXYSeries(final String title) {
+    private XYSeries(final String title) {
         super(title);
-        final org.jfree.data.xy.XYSeries series = new org.jfree.data.xy.XYSeries("Function");
+        final org.jfree.data.xy.XYSeries splineSeries = new org.jfree.data.xy.XYSeries("Spline");
         CubicalSplineMethod currentTask = new CubicalSplineMethod();
         List<Double> coef = currentTask.calculateSpline();
-        System.out.print(coef);
+        //System.out.print(coef);
+        for(int i = 0; i < 11; ++i)
+        {
+            Double x = arrayX.get(0)+(arrayX.get(arrayX.size()-1)-arrayX.get(0))*i/10.0;
+            Double y = currentTask.getSpline(x,coef);
+            splineSeries.add(x,y);
+        }
+        final org.jfree.data.xy.XYSeries leastSquareSeries = new org.jfree.data.xy.XYSeries("Least Square");
+        LeastSquareMethod currentTask_ = new LeastSquareMethod();
+        List<Double> coef_ = currentTask_.calculateCoefficients();
+        System.out.print(coef_);
         for(int i = 0; i < 101; ++i)
         {
-            Double x = arrayX.get(0)+(arrayX.get(arrayX.size()-1)-arrayX.get(0))*i/100.0;
-            Double y = currentTask.getSpline(x,coef);
-            series.add(x,y);
+            double x = arrayX.get(0)+(arrayX.get(arrayX.size()-1)-arrayX.get(0))*i/100.0;
+            Double y = currentTask_.getY(x,coef_);
+            leastSquareSeries.add(x,y);
         }
-        final XYSeriesCollection data = new XYSeriesCollection(series);
+        final XYSeriesCollection data = new XYSeriesCollection();
+        data.addSeries(splineSeries);
+        data.addSeries(leastSquareSeries);
         final JFreeChart chart = ChartFactory.createXYLineChart(
-                "XY Series CubicalSplineMethod",
+                "XY Series",
                 "X",
                 "Y",
                 data,
@@ -58,7 +70,7 @@ class SplineXYSeries extends ApplicationFrame {
     }
     public static void main(final String[] args) {
 
-        final SplineXYSeries firstWindow = new SplineXYSeries("XY Series CubicalSplineMethod");
+        final XYSeries firstWindow = new XYSeries("XY Series CubicalSplineMethod");
         firstWindow.pack();
         RefineryUtilities.centerFrameOnScreen(firstWindow);
         firstWindow.setVisible(true);
